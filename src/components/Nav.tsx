@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -12,7 +12,31 @@ const links = [
   { href: "#plans", label: "Plans" },
 ];
 
-export function Nav() {
+// Lets page content that the pathname can't identify (e.g. a 404 rendered at a
+// blog post URL) tell the layout's Nav that the top of the page is dark.
+const DarkTopContext = createContext<{
+  forced: boolean;
+  setForced: (forced: boolean) => void;
+} | null>(null);
+
+export function NavProvider({ children }: { children: React.ReactNode }) {
+  const [forced, setForced] = useState(false);
+  return (
+    <DarkTopContext.Provider value={{ forced, setForced }}>{children}</DarkTopContext.Provider>
+  );
+}
+
+export function ForceNavDarkTop() {
+  const setForced = useContext(DarkTopContext)?.setForced;
+  useEffect(() => {
+    setForced?.(true);
+    return () => setForced?.(false);
+  }, [setForced]);
+  return null;
+}
+
+export function Nav({ darkTop = false }: { darkTop?: boolean }) {
+  const forcedDarkTop = useContext(DarkTopContext)?.forced ?? false;
   const pathname = usePathname();
   const onHomepage = pathname === "/";
   const onBlogIndex = pathname === "/blog";
@@ -61,8 +85,8 @@ export function Nav() {
   // top (Hero, and the blog's textured header band) — text/icons stay bone
   // there. Every other page (like an individual blog post) starts on a
   // light background, so text needs to read dark before the solid backdrop
-  // kicks in.
-  const hasDarkTop = onHomepage || onBlogIndex;
+  // kicks in. The 404 page opts in via `darkTop` or ForceNavDarkTop.
+  const hasDarkTop = darkTop || forcedDarkTop || onHomepage || onBlogIndex;
   const useDarkText = !showSolid && !hasDarkTop;
   const linkColorClass = (active: boolean) =>
     useDarkText

@@ -28,7 +28,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPost(slug);
-  if (!post) return {};
+  if (!post) return { title: "Page not found" };
 
   const imageUrl = urlFor(post.coverImage).width(1200).height(630).url();
 
@@ -106,12 +106,13 @@ export default async function BlogPostPage({
           {post.title}
         </h1>
 
-        <div className="relative mt-[32px] aspect-[16/9] overflow-hidden rounded-[16px] bg-slate">
+        <div className="relative mt-[32px] aspect-[1200/630] overflow-hidden rounded-[16px] bg-slate">
           <Image
-            src={urlFor(post.coverImage).width(1440).height(810).url()}
+            src={urlFor(post.coverImage).width(1440).height(756).url()}
             alt=""
             fill
             priority
+            sizes="(min-width: 800px) 720px, 100vw"
             className="object-cover"
           />
         </div>

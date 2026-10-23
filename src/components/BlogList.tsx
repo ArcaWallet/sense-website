@@ -90,12 +90,13 @@ export function BlogList({ posts }: { posts: PostSummary[] }) {
               href={`/blog/${featured.slug}`}
               className="grid grid-cols-1 items-center gap-[28px] rounded-[20px] bg-ink/[.035] p-[20px] no-underline md:grid-cols-[1.15fr_1fr] md:gap-[36px] md:p-[28px]"
             >
-              <div className="relative aspect-[16/11] overflow-hidden rounded-[14px] bg-slate">
+              <div className="relative aspect-[1200/630] overflow-hidden rounded-[14px] bg-slate">
                 <Image
-                  src={urlFor(featured.coverImage).width(1200).height(825).url()}
+                  src={urlFor(featured.coverImage).width(1200).height(630).url()}
                   alt=""
                   fill
                   priority
+                  sizes="(min-width: 768px) 50vw, 100vw"
                   className="object-cover"
                 />
               </div>
@@ -127,11 +128,12 @@ export function BlogList({ posts }: { posts: PostSummary[] }) {
                     href={`/blog/${post.slug}`}
                     className="group block no-underline"
                   >
-                    <div className="relative aspect-[4/3] overflow-hidden rounded-[14px] bg-slate">
+                    <div className="relative aspect-[1200/630] overflow-hidden rounded-[14px] bg-slate">
                       <Image
-                        src={urlFor(post.coverImage).width(800).height(600).url()}
+                        src={urlFor(post.coverImage).width(800).height(420).url()}
                         alt=""
                         fill
+                        sizes="(min-width: 768px) 33vw, 100vw"
                         className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                       />
                       {post.tags && post.tags.length > 0 && (

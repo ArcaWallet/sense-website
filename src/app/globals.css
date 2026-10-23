@@ -90,6 +90,10 @@ html {
   0% { transform: scale(0.4); opacity: 0.85; }
   100% { transform: scale(2.6); opacity: 0; }
 }
+@keyframes sweep {
+  from { top: 14%; }
+  to { top: 84%; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,

@@ -46,7 +46,7 @@ export const post = defineType({
       name: "coverImage",
       title: "Cover image",
       description:
-        "Landscape photo, ideally 1600px+ wide. It gets automatically cropped to several different shapes around the site (grid card, featured post, full post header, and the image shown when this post is shared on social media) - use the crop tool to control what stays in frame for the tighter crops.",
+        "Use 1200 x 630, or larger at the same shape (2400 x 1260 looks sharpest). It's shown uncropped on the blog, the post page, and in link previews when the post is shared. Other shapes get trimmed to fit - use the crop tool to choose what stays in frame.",
       type: "image",
       options: { hotspot: true },
       validation: (rule) => rule.required(),

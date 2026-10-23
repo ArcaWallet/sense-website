@@ -74,7 +74,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${borel.variable} h-full antialiased`}>
+    <html lang="en" className={`${borel.variable} h-full antialiased`} data-scroll-behavior="smooth">
       <body className="min-h-full flex flex-col">
         <script
           type="application/ld+json"
