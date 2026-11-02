@@ -26,7 +26,8 @@ export type Post = PostSummary & {
   body: PortableTextBlock[];
 };
 
-export const postsListQuery = `*[_type == "post"] | order(publishedAt desc){
+// Posts with a future "Published at" date stay hidden until that moment.
+export const postsListQuery = `*[_type == "post" && publishedAt <= now()] | order(publishedAt desc){
   _id,
   title,
   "slug": slug.current,
@@ -36,7 +37,7 @@ export const postsListQuery = `*[_type == "post"] | order(publishedAt desc){
   tags
 }`;
 
-export const postBySlugQuery = `*[_type == "post" && slug.current == $slug][0]{
+export const postBySlugQuery = `*[_type == "post" && slug.current == $slug && publishedAt <= now()][0]{
   _id,
   title,
   "slug": slug.current,
@@ -47,4 +48,4 @@ export const postBySlugQuery = `*[_type == "post" && slug.current == $slug][0]{
   body
 }`;
 
-export const postSlugsQuery = `*[_type == "post"]{ "slug": slug.current }`;
+export const postSlugsQuery = `*[_type == "post" && publishedAt <= now()]{ "slug": slug.current }`;
